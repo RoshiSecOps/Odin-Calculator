@@ -1,9 +1,9 @@
-let numOne
-let numTwo
-let opSymbol
+let numOne = null;
+let numTwo = null;
+let opSymbol = null;
+let result = null;
 
 let opSymbolArray = ["+", "-", "*", "/"];
-let opClassArray = ["add", "sub", "multy", "divide"];
 
 const body = document.querySelector("body");
 const calcBox = document.createElement("div");
@@ -11,13 +11,23 @@ const numBox = document.createElement("div");
 const opBox = document.createElement("div");
 const inputScreen = document.createElement("input");
 
-const clearButton = document.createElement("button")
+const clearButton = document.createElement("button");
 clearButton.innerHTML = "C";
 clearButton.className = "clear"
 clearButton.addEventListener("click", () => {
     inputScreen.value = "";
+    numOne = null;
+    numTwo = null;
+    opSymbol = null;
+    result = "";
 });
-body.setAttribute("stype", "display: flex; align-items: center; justify-content: center;")
+
+const operateButton = document.createElement("button");
+operateButton.innerHTML = "=";
+operateButton.addEventListener("click", operate);
+opBox.appendChild(operateButton);
+
+body.setAttribute("style", "display: flex; flex: auto; align-items: center; justify-content: center;")
 calcBox.setAttribute("style", "width: 150px; height: 300px;")
 opBox.appendChild(clearButton);
 
@@ -31,15 +41,25 @@ const calcScreen = document.createElement("input");
 
 for (let i = 0; i <= 9; i++){
     let calcNumber = document.createElement("button");
+    calcNumber.addEventListener("click", () => {
+        inputScreen.value += calcNumber.innerHTML;
+    })
     numBox.appendChild(calcNumber);
     calcNumber.innerHTML = [i]; 
 }
 
 for (let i = 0; i < opSymbolArray.length; i++){
     let calcOperator = document.createElement("button");
-    opBox.appendChild(calcOperator);
     calcOperator.innerHTML = opSymbolArray[i];
-    calcOperator.className = `${opClassArray[i]}`;
+    calcOperator.addEventListener("click", () => {
+        numOne = Number(inputScreen.value);
+        console.log(numOne);
+        opSymbol = calcOperator.innerHTML;
+        console.log(opSymbol);
+        inputScreen.value="";
+        return opSymbol && numOne;
+        });
+    opBox.appendChild(calcOperator);
 }
 
 function addNums(a, b){
@@ -58,14 +78,25 @@ function divNums(a, b){
     return a / b;
 }
 
-function operate(numOne, numTwo, opSymbol){
+function operate(){
+    numTwo = Number(inputScreen.value);
     if(opSymbol == "+"){
-        return addNums(numOne, numTwo);
+        result = addNums(numOne, numTwo)
+        inputScreen.value = result;
     }else if(opSymbol == "-"){
-        return subNums(numOne, numTwo);
+        result = subNums(numOne, numTwo);
+        inputScreen.value = result;
     }else if(opSymbol == "*"){
-        return multiplyNums(numOne, numTwo);
+        result = multiplyNums(numOne, numTwo);
+        inputScreen.value = result;
     }else if(opSymbol == "/"){
-        return divNums(numOne, numTwo);
+        result = divNums(numOne, numTwo);
+        inputScreen.value = result;
     }
+    inputScreen.value = result;
+    numOne = null;
+    numTwo = null;
+    opSymbol = null;
+    return {numOne, numTwo, opSymbol};
 }
+
