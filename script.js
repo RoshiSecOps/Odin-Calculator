@@ -94,8 +94,14 @@ function operate(){
         result = multiplyNums(numOne, numTwo);
         inputScreen.value = result;
     }else if(opSymbol == "/"){
+        if (numTwo == 0){
+            let clickEvent = new Event('click');
+            clearButton.dispatchEvent(clickEvent);
+            alert("Nah bro, we won't divide by 0")
+        }else{
         result = divNums(numOne, numTwo);
         inputScreen.value = result;
+        }
     }
     inputScreen.value = Math.round(result * 100) / 100;
     numOne = null;
@@ -104,3 +110,10 @@ function operate(){
     return {numOne, numTwo, opSymbol};
 }
 
+function clearAll(){
+    inputScreen.value = "";
+    numOne = null;
+    numTwo = null;
+    opSymbol = null;
+    result = "";
+}
