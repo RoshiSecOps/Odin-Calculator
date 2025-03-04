@@ -42,7 +42,13 @@ const calcScreen = document.createElement("input");
 for (let i = 0; i <= 9; i++){
     let calcNumber = document.createElement("button");
     calcNumber.addEventListener("click", () => {
+        if(result != null) {
+            inputScreen.value = "";
+            result = null;
+            inputScreen.value += calcNumber.innerHTML;
+        }else{
         inputScreen.value += calcNumber.innerHTML;
+        }
     })
     numBox.appendChild(calcNumber);
     calcNumber.innerHTML = [i]; 
