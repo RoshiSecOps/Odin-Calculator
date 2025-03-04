@@ -99,7 +99,7 @@ function operate(){
         result = divNums(numOne, numTwo);
         inputScreen.value = result;
     }
-    inputScreen.value = result;
+    inputScreen.value = Math.round(result * 100) / 100;
     numOne = null;
     numTwo = null;
     opSymbol = null;
