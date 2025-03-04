@@ -59,9 +59,7 @@ for (let i = 0; i < opSymbolArray.length; i++){
     calcOperator.innerHTML = opSymbolArray[i];
     calcOperator.addEventListener("click", () => {
         numOne = Number(inputScreen.value);
-        console.log(numOne);
         opSymbol = calcOperator.innerHTML;
-        console.log(opSymbol);
         inputScreen.value="";
         return opSymbol && numOne;
         });
